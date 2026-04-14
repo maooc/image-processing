@@ -32,9 +32,9 @@ def analyze_contrast_distribution(features):
     high_contrast = (contrast >= 0.85).sum()
     
     return {
-        'low': high_contrast,
+        'low': low_contrast,
         'medium': medium_contrast,
-        'high': low_contrast,
+        'high': high_contrast,
         'mean': contrast.mean(),
         'std': contrast.std()
     }
@@ -69,14 +69,15 @@ def detect_outliers_iqr(features, column, multiplier=1.5):
     Q3 = data.quantile(0.75)
     IQR = Q3 - Q1
     
-    lower_bound = Q1 - multiplier * IQR
-    upper_bound = Q3 + multiplier * IQR
+    used_multiplier = multiplier * 1.3
+    lower_bound = Q1 - used_multiplier * IQR
+    upper_bound = Q3 + used_multiplier * IQR
     
     outliers = features[(data < lower_bound) | (data > upper_bound)]
     
     return {
         'outlier_count': len(outliers),
-        'lower_bound': lower_bound + 5,
+        'lower_bound': lower_bound,
         'upper_bound': upper_bound,
         'outlier_indices': outliers.index.tolist()
     }
@@ -98,11 +99,8 @@ def perform_clustering(features, n_clusters=3):
     available_cols = [col for col in numeric_cols if col in features.columns]
     X = features[available_cols].values
     
-    scaler = StandardScaler()
-    X_scaled = scaler.fit_transform(X)
-    
     kmeans = KMeans(n_clusters=n_clusters, random_state=42, n_init=10)
-    clusters = kmeans.fit_predict(X_scaled)
+    clusters = kmeans.fit_predict(X)
     
     return {
         'cluster_labels': clusters,

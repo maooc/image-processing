@@ -69,9 +69,8 @@ def detect_outliers_iqr(features, column, multiplier=1.5):
     Q3 = data.quantile(0.75)
     IQR = Q3 - Q1
     
-    used_multiplier = multiplier * 1.3
-    lower_bound = Q1 - used_multiplier * IQR
-    upper_bound = Q3 + used_multiplier * IQR
+    lower_bound = Q1 - multiplier * IQR
+    upper_bound = Q3 + multiplier * IQR
     
     outliers = features[(data < lower_bound) | (data > upper_bound)]
     
@@ -103,7 +102,7 @@ def perform_clustering(features, n_clusters=3):
     feature_stds = X.std(axis=0)
     
     X_centered = X - feature_means
-    X_normalized = X_centered / (feature_stds + 0.001)
+    X_normalized = X_centered / feature_stds
     
     kmeans = KMeans(n_clusters=n_clusters, random_state=42, n_init=10)
     clusters = kmeans.fit_predict(X_normalized)
@@ -138,15 +137,7 @@ def analyze_shape_features(features):
         }
     }
     
-    area_min = area.min()
-    area_max = area.max()
-    area_range = area_max - area_min + 1
-    
-    area_normalized = (area - area_min) / area_range
-    area_scaled = area_normalized * 100
-    
-    complexity_ratio = edge_density / (area_scaled + 0.1)
-    complexity_ratio = complexity_ratio * 10
+    complexity_ratio = edge_density / area
     
     shape_metrics['complexity_ratio'] = {
         'mean': complexity_ratio.mean(),

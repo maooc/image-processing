@@ -1,0 +1,78 @@
+============================================================
+Image Feature Analysis Report
+============================================================
+
+BASIC STATISTICS
+----------------------------------------
+pixel_mean:
+  Mean: 147.12
+  Median: 146.50
+  Std: 12.13
+  Range: [125.67, 168.90]
+
+pixel_std:
+  Mean: 53.29
+  Median: 53.28
+  Std: 3.92
+  Range: [45.78, 59.45]
+
+pixel_min:
+  Mean: 0.00
+  Median: 0.00
+  Std: 0.00
+  Range: [0.00, 0.00]
+
+pixel_max:
+  Mean: 255.00
+  Median: 255.00
+  Std: 0.00
+  Range: [255.00, 255.00]
+
+CONTRAST DISTRIBUTION
+----------------------------------------
+Low Contrast: 2
+Medium Contrast: 22
+High Contrast: 16
+Mean: 0.8240
+
+BRIGHTNESS DISTRIBUTION
+----------------------------------------
+Dark Images: 4
+Medium Images: 19
+Bright Images: 17
+Mean Brightness: 147.12
+
+TEXTURE PROPERTIES
+----------------------------------------
+entropy:
+  Mean: 6.1043
+  Std: 0.2336
+
+texture_energy:
+  Mean: 0.6752
+  Std: 0.0558
+
+homogeneity:
+  Mean: 0.7225
+  Std: 0.0475
+
+correlation:
+  Mean: 0.8555
+  Std: 0.0414
+
+SHAPE FEATURES
+----------------------------------------
+Area - Mean: 24495.50, Std: 1752.39
+Corner Count - Mean: 15.80, Std: 3.31
+
+OUTLIER DETECTION
+----------------------------------------
+Contrast Outliers: 0
+Entropy Outliers: 0
+
+CLUSTERING RESULTS
+----------------------------------------
+Cluster 0: 13 images
+Cluster 1: 14 images
+Cluster 2: 13 images
+Inertia: 29.16

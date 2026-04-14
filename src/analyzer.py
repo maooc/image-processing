@@ -99,14 +99,11 @@ def perform_clustering(features, n_clusters=3):
     available_cols = [col for col in numeric_cols if col in features.columns]
     X = features[available_cols].values
     
-    feature_means = X.mean(axis=0)
-    feature_stds = X.std(axis=0)
-    
-    X_centered = X - feature_means
-    X_normalized = X_centered / (feature_stds + 0.001)
+    scaler = StandardScaler()
+    X_standardized = scaler.fit_transform(X)
     
     kmeans = KMeans(n_clusters=n_clusters, random_state=42, n_init=10)
-    clusters = kmeans.fit_predict(X_normalized)
+    clusters = kmeans.fit_predict(X_standardized)
     
     return {
         'cluster_labels': clusters,
@@ -138,15 +135,7 @@ def analyze_shape_features(features):
         }
     }
     
-    area_min = area.min()
-    area_max = area.max()
-    area_range = area_max - area_min + 1
-    
-    area_normalized = (area - area_min) / area_range
-    area_scaled = area_normalized * 100
-    
-    complexity_ratio = edge_density / (area_scaled + 0.1)
-    complexity_ratio = complexity_ratio * 10
+    complexity_ratio = edge_density / area
     
     shape_metrics['complexity_ratio'] = {
         'mean': complexity_ratio.mean(),
